@@ -1,4 +1,4 @@
-package com.example.TravelAgency.model;
+package com.example.TravelAgency.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
