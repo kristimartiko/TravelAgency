@@ -1,6 +1,5 @@
 package com.example.TravelAgency.dto;
 
-import com.example.TravelAgency.model.User;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -19,8 +18,6 @@ public class TripDto implements Serializable {
     public Date departureDate;
     @Getter
     public Date arrivalDate;
-    @Getter
-    public User user;
     @Getter
     public String status;
 }
