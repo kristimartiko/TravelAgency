@@ -40,15 +40,14 @@ public class Trip {
 
     @Column(nullable = false, name = "arrival_date")
     @Getter @Setter
-    private Date arrival_date;
+    private Date arrivalDate;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @Getter @Setter
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "status_id")
+    @JoinColumn(name = "status")
     @Getter @Setter
-    private Status status;
+    private String status;
 }
