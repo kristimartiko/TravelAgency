@@ -1,9 +1,9 @@
 package com.example.TravelAgency.service;
 
 import com.example.TravelAgency.dto.TripDto;
+import com.example.TravelAgency.entity.TripEntity;
+import com.example.TravelAgency.entity.UserEntity;
 import com.example.TravelAgency.enumeration.TripStatusEnum;
-import com.example.TravelAgency.entity.Trip;
-import com.example.TravelAgency.entity.User;
 import com.example.TravelAgency.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,49 +21,49 @@ public class TripService {
 
     private final MyUserDetailService myUserDetailService;
 
-    public Trip createTrip(TripDto tripDto) {
-        User user = myUserDetailService.getCurrentUser();
-        Trip trip = Trip.builder()
+    public TripEntity createTrip(TripDto tripDto) {
+        UserEntity userEntity = myUserDetailService.getCurrentUser();
+        TripEntity tripEntity = TripEntity.builder()
                 .tripReason(tripDto.getTripReason())
                 .tripDescription(tripDto.getTripDescription())
                 .fromPlace(tripDto.getFromPlace())
                 .toPlace(tripDto.getToPlace())
                 .departureDate(tripDto.getDepartureDate())
                 .arrivalDate(tripDto.getArrivalDate())
-                .user(user)
+                .userEntity(userEntity)
                 .status(TripStatusEnum.CREATED)
                 .build();
-        return tripRepository.save(trip);
+        return tripRepository.save(tripEntity);
     }
 
     public void updateTrip(TripDto tripDto, Long tripId) {
-//        Trip trip = tripRepository.isPresent(trip_id);
-//        trip.setTripReason(tripDto.getTripReason());
-//        trip.setTripDescription(tripDto.getTripDescription());
-//        trip.setFromPlace(tripDto.getFromPlace());
-//        trip.setToPlace(tripDto.getToPlace());
-//        trip.setDepartureDate(tripDto.getDepartureDate());
-//        trip.setArrivalDate(tripDto.getArrivalDate());
-//        tripRepository.save(trip);
+//        TripEntity tripEntity = tripRepository.isPresent(trip_id);
+//        tripEntity.setTripReason(tripDto.getTripReason());
+//        tripEntity.setTripDescription(tripDto.getTripDescription());
+//        tripEntity.setFromPlace(tripDto.getFromPlace());
+//        tripEntity.setToPlace(tripDto.getToPlace());
+//        tripEntity.setDepartureDate(tripDto.getDepartureDate());
+//        tripEntity.setArrivalDate(tripDto.getArrivalDate());
+//        tripRepository.save(tripEntity);
     }
 
     public void deleteTrip(Long tripId) {
-        Optional<Trip> trip = tripRepository.findById(tripId);
+        Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
             tripRepository.deleteTripById(tripId);
         }
     }
 
-    public Trip sendApproval(Long tripId) {
-        Optional<Trip> trip = tripRepository.findById(tripId);
+    public TripEntity sendApproval(Long tripId) {
+        Optional<TripEntity> trip = tripRepository.findById(tripId);
         if (trip.isPresent()) {
             trip.get().setStatus(TripStatusEnum.PENDING);
         }
         return tripRepository.save(trip.get());
     }
 
-    public Trip approveTrip(Long tripId) {
-        Optional<Trip> trip = tripRepository.findById(tripId);
+    public TripEntity approveTrip(Long tripId) {
+        Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
             trip.get().setStatus(TripStatusEnum.APPROVED);
         }
@@ -71,21 +71,21 @@ public class TripService {
     }
 
     public void declineTrip(Long tripId) {
-        Optional<Trip> trip = tripRepository.findById(tripId);
+        Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
             trip.get().setStatus(TripStatusEnum.CREATED);
         }
     }
 
-    public List<Trip> getTrips() {
+    public List<TripEntity> getTrips() {
         return tripRepository.findAllByStatusIs(TripStatusEnum.CREATED);
     }
 
-    public List<Trip> getPendingTrips() {
+    public List<TripEntity> getPendingTrips() {
         return tripRepository.findAllByStatusIs(TripStatusEnum.PENDING);
     }
 
-    public List<Trip> getApprovedTrips() {
+    public List<TripEntity> getApprovedTrips() {
         return tripRepository.findAllByStatusIs(TripStatusEnum.APPROVED);
     }
 

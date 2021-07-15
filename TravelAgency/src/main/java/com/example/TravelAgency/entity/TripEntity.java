@@ -1,9 +1,7 @@
-package com.example.TravelAgency.model;
+package com.example.TravelAgency.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.TravelAgency.enumeration.TripStatusEnum;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,43 +9,37 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Trip {
+@Getter
+@Setter
+@Builder
+public class TripEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
     private Long tripId;
 
     @Column(nullable = false, name = "trip_reason")
-    @Getter @Setter
     private String tripReason;
 
     @Column(nullable = false, name = "trip_description")
-    @Getter @Setter
     private String tripDescription;
 
     @Column(nullable = false, name = "from_place")
-    @Getter @Setter
     private String fromPlace;
 
     @Column(nullable = false, name = "to_place")
-    @Getter @Setter
     private String toPlace;
 
     @Column(nullable = false, name = "depature_date")
-    @Getter @Setter
     private Date departureDate;
 
     @Column(nullable = false, name = "arrival_date")
-    @Getter @Setter
     private Date arrivalDate;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    @Getter @Setter
-    private User user;
+    private UserEntity userEntity;
 
-    @JoinColumn(name = "status")
-    @Getter @Setter
-    private String status;
+    @Column(name = "status")
+    private TripStatusEnum status;
 }

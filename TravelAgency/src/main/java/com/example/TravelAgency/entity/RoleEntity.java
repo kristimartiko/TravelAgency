@@ -1,20 +1,23 @@
-package com.example.TravelAgency.model;
+package com.example.TravelAgency.entity;
 
 import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-public class Role {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
     private Long roleId;
 
     @Column(nullable = false, name = "name")
-    @Getter @Setter
     private String name;
-
 }
