@@ -1,6 +1,7 @@
 package com.example.TravelAgency.entity;
 
 import com.example.TravelAgency.enumeration.TripStatusEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
+@Table(name = "trip")
 public class TripEntity {
 
     @Id
@@ -31,9 +33,11 @@ public class TripEntity {
     private String toPlace;
 
     @Column(nullable = false, name = "depature_date")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date departureDate;
 
     @Column(nullable = false, name = "arrival_date")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date arrivalDate;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

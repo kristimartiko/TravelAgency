@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "role")
 public class RoleEntity {
 
     @Id
