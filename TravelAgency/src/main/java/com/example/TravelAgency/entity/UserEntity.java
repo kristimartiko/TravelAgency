@@ -11,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
+@Table(name = "user")
 public class UserEntity {
 
     @Id
@@ -29,7 +30,7 @@ public class UserEntity {
     @Column(nullable = false, name = "password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId"))
     private Set<RoleEntity> roleEntities;
