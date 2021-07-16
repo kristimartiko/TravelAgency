@@ -7,6 +7,7 @@ import com.example.TravelAgency.enumeration.TripStatusEnum;
 import com.example.TravelAgency.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,7 +79,8 @@ public class TripService {
     }
 
     public List<TripEntity> getTrips() {
-        return tripRepository.findAllByStatusIs(TripStatusEnum.CREATED);
+        UserEntity userEntity = myUserDetailService.getCurrentUser();
+        return tripRepository.findAllByStatusIsAndUserEntity(TripStatusEnum.CREATED, userEntity);
     }
 
     public List<TripEntity> getPendingTrips() {
@@ -86,7 +88,8 @@ public class TripService {
     }
 
     public List<TripEntity> getApprovedTrips() {
-        return tripRepository.findAllByStatusIs(TripStatusEnum.APPROVED);
+        UserEntity userEntity = myUserDetailService.getCurrentUser();
+        return tripRepository.findAllByStatusIsAndUserEntity(TripStatusEnum.APPROVED, userEntity);
     }
 
     public String getStatus(Long tripId) {

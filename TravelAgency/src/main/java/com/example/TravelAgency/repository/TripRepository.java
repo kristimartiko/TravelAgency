@@ -1,5 +1,6 @@
 package com.example.TravelAgency.repository;
 
+import com.example.TravelAgency.entity.UserEntity;
 import com.example.TravelAgency.enumeration.TripStatusEnum;
 import com.example.TravelAgency.entity.TripEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,10 +13,13 @@ public interface TripRepository extends JpaRepository<TripEntity, Long> {
 
     public void deleteTripEntityByTripId(@Param("trip_id") Long tripId);
 
+    public List<TripEntity> findAllByStatusIsAndUserEntity(TripStatusEnum tripStatusEnum, UserEntity userEntity);
+
     public List<TripEntity> findAllByStatusIs(TripStatusEnum tripStatusEnum);
 
     @Query(value = "SELECT status from Trip  WHERE trip_id :trip_id", nativeQuery = true)
     public String getStatus(@Param("trip_id") Long tripId);
 
     public TripEntity findTripEntityByTripId(@Param("trip_id") Long tripId);
+
 }
