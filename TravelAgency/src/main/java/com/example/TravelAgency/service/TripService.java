@@ -37,20 +37,20 @@ public class TripService {
     }
 
     public void updateTrip(TripDto tripDto, Long tripId) {
-//        TripEntity tripEntity = tripRepository.isPresent(trip_id);
-//        tripEntity.setTripReason(tripDto.getTripReason());
-//        tripEntity.setTripDescription(tripDto.getTripDescription());
-//        tripEntity.setFromPlace(tripDto.getFromPlace());
-//        tripEntity.setToPlace(tripDto.getToPlace());
-//        tripEntity.setDepartureDate(tripDto.getDepartureDate());
-//        tripEntity.setArrivalDate(tripDto.getArrivalDate());
-//        tripRepository.save(tripEntity);
+        TripEntity tripEntity = tripRepository.findTripEntityByTripId(tripId);
+        tripEntity.setTripReason(tripDto.getTripReason());
+        tripEntity.setTripDescription(tripDto.getTripDescription());
+        tripEntity.setFromPlace(tripDto.getFromPlace());
+        tripEntity.setToPlace(tripDto.getToPlace());
+        tripEntity.setDepartureDate(tripDto.getDepartureDate());
+        tripEntity.setArrivalDate(tripDto.getArrivalDate());
+        tripRepository.save(tripEntity);
     }
 
     public void deleteTrip(Long tripId) {
         Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
-            tripRepository.deleteTripById(tripId);
+            tripRepository.deleteTripEntityByTripId(tripId);
         }
     }
 
