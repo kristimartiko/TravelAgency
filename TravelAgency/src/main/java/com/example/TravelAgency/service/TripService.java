@@ -71,11 +71,12 @@ public class TripService {
         return tripRepository.save(trip.get());
     }
 
-    public void declineTrip(Long tripId) {
+    public TripEntity declineTrip(Long tripId) {
         Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
             trip.get().setStatus(TripStatusEnum.CREATED);
         }
+        return tripRepository.save(trip.get());
     }
 
     public List<TripEntity> getTrips() {
@@ -92,7 +93,8 @@ public class TripService {
         return tripRepository.findAllByStatusIsAndUserEntity(TripStatusEnum.APPROVED, userEntity);
     }
 
-    public String getStatus(Long tripId) {
-        return tripRepository.getStatus(tripId);
+    public TripStatusEnum getStatus(Long tripId) {
+        TripEntity tripEntity = tripRepository.findTripEntityByTripId(tripId);
+        return tripEntity.getStatus();
     }
 }
