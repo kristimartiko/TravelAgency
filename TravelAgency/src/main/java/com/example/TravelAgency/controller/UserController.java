@@ -1,32 +1,38 @@
 package com.example.TravelAgency.controller;
 
+import com.example.TravelAgency.dto.UserDto;
 import com.example.TravelAgency.entity.AuthenticationRequest;
 import com.example.TravelAgency.entity.AuthenticationResponse;
+import com.example.TravelAgency.entity.UserEntity;
 import com.example.TravelAgency.service.MyUserDetailService;
+import com.example.TravelAgency.service.UserService;
 import com.example.TravelAgency.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
 public class UserController {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private MyUserDetailService myUserDetailService;
+    private JwtUtil jwtUtil;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private MyUserDetailService myUserDetailService;
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
@@ -42,5 +48,15 @@ public class UserController {
         final String jwt = jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt, firstName));
+    }
+
+    @PostMapping(value = "/addUser")
+    public UserEntity addUser(@RequestBody UserDto userDto) {
+        return this.userService.addUser(userDto);
+    }
+
+    @GetMapping(value = "/users")
+    public List<UserEntity> getUsers() {
+        return this.userService.getUsers();
     }
 }
