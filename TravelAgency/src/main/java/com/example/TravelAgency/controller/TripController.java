@@ -17,6 +17,7 @@ public class TripController {
 
     @PostMapping("/createTrip")
     public TripEntity createTrip(@RequestBody TripDto tripDto) {
+        //System.out.print(tripDto);
         return tripService.createTrip(tripDto);
     }
 
@@ -46,7 +47,7 @@ public class TripController {
         return tripService.getApprovedTrips();
     }
 
-    @PostMapping("/sendApproval{id}")
+    @GetMapping("/sendApproval{id}")
     public TripEntity sendApproval(@PathVariable("id") Long id) {
         return tripService.sendApproval(id);
     }

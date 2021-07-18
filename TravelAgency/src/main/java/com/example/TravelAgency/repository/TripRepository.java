@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface TripRepository extends JpaRepository<TripEntity, Long> {
 
-    public void deleteTripEntityByTripId(@Param("trip_id") Long tripId);
+    //public void deleteTripEntityByTripId(@Param("trip_id") Long tripId);
 
     public List<TripEntity> findAllByStatusIsAndUserEntity(TripStatusEnum tripStatusEnum, UserEntity userEntity);
 
@@ -19,6 +19,6 @@ public interface TripRepository extends JpaRepository<TripEntity, Long> {
 
     public TripEntity findTripEntityByTripId(@Param("trip_id") Long tripId);
 
-    public List<TripEntity> findTripEntityByUserEntity(UserEntity userEntity);
+    public List<TripEntity> findAllByUserEntity(UserEntity userEntity);
 
 }

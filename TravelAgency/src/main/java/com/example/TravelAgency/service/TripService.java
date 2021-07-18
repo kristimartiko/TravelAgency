@@ -4,12 +4,16 @@ import com.example.TravelAgency.dto.TripDto;
 import com.example.TravelAgency.entity.TripEntity;
 import com.example.TravelAgency.entity.UserEntity;
 import com.example.TravelAgency.enumeration.TripStatusEnum;
+import com.example.TravelAgency.repository.FlightRepository;
 import com.example.TravelAgency.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +25,9 @@ public class TripService {
     private final TripRepository tripRepository;
 
     private final MyUserDetailService myUserDetailService;
+
+    @Autowired
+    private FlightRepository flightRepository;
 
     public TripEntity createTrip(TripDto tripDto) {
         UserEntity userEntity = myUserDetailService.getCurrentUser();
@@ -48,10 +55,12 @@ public class TripService {
         tripRepository.save(tripEntity);
     }
 
+    @Transactional
     public void deleteTrip(Long tripId) {
         Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
-            tripRepository.deleteTripEntityByTripId(tripId);
+            flightRepository.deleteAllByTripEntity(trip.get());
+            tripRepository.deleteById(tripId);
         }
     }
 
@@ -81,7 +90,7 @@ public class TripService {
 
     public List<TripEntity> getTrips() {
         UserEntity userEntity = myUserDetailService.getCurrentUser();
-        return tripRepository.findAllByStatusIsAndUserEntity(TripStatusEnum.CREATED, userEntity);
+        return tripRepository.findAllByUserEntity(userEntity);
     }
 
     public List<TripEntity> getPendingTrips() {

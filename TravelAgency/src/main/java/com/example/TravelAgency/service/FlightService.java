@@ -39,7 +39,7 @@ public class FlightService {
     public List<FlightEntity> getAllFlights() {
         List<FlightEntity> flights = new ArrayList<FlightEntity>();
         UserEntity userEntity = myUserDetailService.getCurrentUser();
-        List<TripEntity> tripEntity = tripRepository.findTripEntityByUserEntity(userEntity);
+        List<TripEntity> tripEntity = tripRepository.findAllByUserEntity(userEntity);
         for(TripEntity tripEntity1: tripEntity) {
            for(FlightEntity flightElement : flightRepository.findFlightEntityByTripEntity(tripEntity1)) {
                flights.add(flightElement);
