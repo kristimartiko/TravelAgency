@@ -3,14 +3,16 @@ package com.example.TravelAgency.service;
 import com.example.TravelAgency.dto.TripDto;
 import com.example.TravelAgency.entity.TripEntity;
 import com.example.TravelAgency.entity.UserEntity;
-import com.example.TravelAgency.enumeration.TripStatusEnum;
 import com.example.TravelAgency.repository.FlightRepository;
 import com.example.TravelAgency.repository.TripRepository;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -60,7 +62,7 @@ public class TripService {
         Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
             flightRepository.deleteAllByTripEntity(trip.get());
-            tripRepository.deleteById(tripId);
+            tripRepository.deleteItem(tripId);
         }
     }
 

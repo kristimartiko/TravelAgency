@@ -4,7 +4,10 @@ import com.example.TravelAgency.dto.TripDto;
 import com.example.TravelAgency.entity.TripEntity;
 import com.example.TravelAgency.enumeration.TripStatusEnum;
 import com.example.TravelAgency.service.TripService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
