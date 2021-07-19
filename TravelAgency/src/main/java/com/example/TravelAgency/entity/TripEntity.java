@@ -40,10 +40,10 @@ public class TripEntity {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date arrivalDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
     @Column(name = "status")
-    private TripStatusEnum status;
+    private String status;
 }

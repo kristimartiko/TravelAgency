@@ -39,7 +39,7 @@ public class TripService {
                 .departureDate(tripDto.getDepartureDate())
                 .arrivalDate(tripDto.getArrivalDate())
                 .userEntity(userEntity)
-                .status(TripStatusEnum.CREATED)
+                .status("CREATED")
                 .build();
         return tripRepository.save(tripEntity);
     }
@@ -67,7 +67,7 @@ public class TripService {
     public TripEntity sendApproval(Long tripId) {
         Optional<TripEntity> trip = tripRepository.findById(tripId);
         if (trip.isPresent()) {
-            trip.get().setStatus(TripStatusEnum.PENDING);
+            trip.get().setStatus("PENDING");
         }
         return tripRepository.save(trip.get());
     }
@@ -75,7 +75,7 @@ public class TripService {
     public TripEntity approveTrip(Long tripId) {
         Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
-            trip.get().setStatus(TripStatusEnum.APPROVED);
+            trip.get().setStatus("APPROVED");
         }
         return tripRepository.save(trip.get());
     }
@@ -83,26 +83,26 @@ public class TripService {
     public TripEntity declineTrip(Long tripId) {
         Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
-            trip.get().setStatus(TripStatusEnum.CREATED);
+            trip.get().setStatus("CREATED");
         }
         return tripRepository.save(trip.get());
     }
 
     public List<TripEntity> getTrips() {
         UserEntity userEntity = myUserDetailService.getCurrentUser();
-        return tripRepository.findAllByUserEntity(userEntity);
+        return tripRepository.findAllByStatusIsAndUserEntity("CREATED", userEntity);
     }
 
     public List<TripEntity> getPendingTrips() {
-        return tripRepository.findAllByStatusIs(TripStatusEnum.PENDING);
+        return tripRepository.findAllByStatusIs("PENDING");
     }
 
     public List<TripEntity> getApprovedTrips() {
         UserEntity userEntity = myUserDetailService.getCurrentUser();
-        return tripRepository.findAllByStatusIsAndUserEntity(TripStatusEnum.APPROVED, userEntity);
+        return tripRepository.findAllByStatusIsAndUserEntity("APPROVED", userEntity);
     }
 
-    public TripStatusEnum getStatus(Long tripId) {
+    public String getStatus(Long tripId) {
         TripEntity tripEntity = tripRepository.findTripEntityByTripId(tripId);
         return tripEntity.getStatus();
     }

@@ -52,18 +52,18 @@ public class TripController {
         return tripService.sendApproval(id);
     }
 
-    @PostMapping("/approveTrip{id}")
+    @GetMapping("/approveTrip{id}")
     public TripEntity approveTrip(@PathVariable("id") Long id) {
         return tripService.approveTrip(id);
     }
 
-    @PostMapping("/declineTrip{id}")
+    @GetMapping("/declineTrip{id}")
     public TripEntity declineTrip(@PathVariable("id") Long id) {
         return tripService.declineTrip(id);
     }
 
     @GetMapping("/status{id}")
-    public TripStatusEnum getStatus(@PathVariable("id") Long id) {
+    public String getStatus(@PathVariable("id") Long id) {
         return tripService.getStatus(id);
     }
 

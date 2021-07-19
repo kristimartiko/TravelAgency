@@ -32,7 +32,7 @@ public class FlightService {
                 .toPlace(tripEntity.getToPlace())
                 .arrivalDate(tripEntity.getArrivalDate())
                 .departureDate(tripEntity.getDepartureDate())
-                .id(tripId).build();
+                .tripEntity(tripEntity).build();
         return flightRepository.save(flightEntity);
     }
 
