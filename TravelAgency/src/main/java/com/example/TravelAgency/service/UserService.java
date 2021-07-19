@@ -5,6 +5,7 @@ import com.example.TravelAgency.entity.AuthenticationRequest;
 import com.example.TravelAgency.entity.AuthenticationResponse;
 import com.example.TravelAgency.entity.RoleEntity;
 import com.example.TravelAgency.entity.UserEntity;
+import com.example.TravelAgency.exception.CustomeException;
 import com.example.TravelAgency.repository.RoleRepository;
 import com.example.TravelAgency.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class UserService {
         Optional<RoleEntity> roleEntity = roleRepository.findById(1L);
         if(roleEntity.isPresent()) {
             userEntity.setRoleEntities(new HashSet<>(Arrays.asList(roleEntity.get())));
+        }
+
+        Optional<UserEntity> foundUser = userRepository.findUserEntityByEmail(userDto.getEmail());
+        if(foundUser.isPresent()) {
+            throw new CustomeException("Oops, user with this email already exists !");
         }
 
         return userRepository.save(userEntity);
