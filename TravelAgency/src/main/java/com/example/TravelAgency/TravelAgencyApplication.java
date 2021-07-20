@@ -1,5 +1,6 @@
 package com.example.TravelAgency;
 
+import org.apache.log4j.BasicConfigurator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,16 +13,9 @@ public class TravelAgencyApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TravelAgencyApplication.class, args);
+        BasicConfigurator.configure();
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200");
-            }
-        };
-    }
+
 
 }

@@ -7,6 +7,7 @@ import com.example.TravelAgency.entity.UserEntity;
 import com.example.TravelAgency.service.MyUserDetailService;
 import com.example.TravelAgency.service.UserService;
 import com.example.TravelAgency.util.JwtUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,8 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class UserController {
+
+    private static final Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -47,16 +50,20 @@ public class UserController {
 
         final String jwt = jwtUtil.generateToken(userDetails);
 
+        logger.info("UserController: User logged in");
+
         return ResponseEntity.ok(new AuthenticationResponse(jwt, firstName));
     }
 
     @PostMapping(value = "/addUser")
     public UserEntity addUser(@RequestBody UserDto userDto) {
+        logger.info("UserController: Added new user");
         return this.userService.addUser(userDto);
     }
 
     @GetMapping(value = "/users")
     public List<UserEntity> getUsers() {
+        logger.info("UserController: Fetching all users");
         return this.userService.getUsers();
     }
 }
