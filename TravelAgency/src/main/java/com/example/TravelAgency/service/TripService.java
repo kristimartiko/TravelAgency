@@ -5,14 +5,9 @@ import com.example.TravelAgency.entity.TripEntity;
 import com.example.TravelAgency.entity.UserEntity;
 import com.example.TravelAgency.repository.FlightRepository;
 import com.example.TravelAgency.repository.TripRepository;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -92,20 +87,11 @@ public class TripService {
 
     public List<TripEntity> getTrips() {
         UserEntity userEntity = myUserDetailService.getCurrentUser();
-        return tripRepository.findAllByStatusIsAndUserEntity("CREATED", userEntity);
+        return tripRepository.findAllByUserEntity(userEntity);
     }
 
     public List<TripEntity> getPendingTrips() {
         return tripRepository.findAllByStatusIs("PENDING");
     }
 
-    public List<TripEntity> getApprovedTrips() {
-        UserEntity userEntity = myUserDetailService.getCurrentUser();
-        return tripRepository.findAllByStatusIsAndUserEntity("APPROVED", userEntity);
-    }
-
-    public String getStatus(Long tripId) {
-        TripEntity tripEntity = tripRepository.findTripEntityByTripId(tripId);
-        return tripEntity.getStatus();
-    }
 }

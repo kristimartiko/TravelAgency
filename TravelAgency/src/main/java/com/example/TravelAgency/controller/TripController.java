@@ -2,12 +2,8 @@ package com.example.TravelAgency.controller;
 
 import com.example.TravelAgency.dto.TripDto;
 import com.example.TravelAgency.entity.TripEntity;
-import com.example.TravelAgency.enumeration.TripStatusEnum;
 import com.example.TravelAgency.service.TripService;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,11 +41,6 @@ public class TripController {
         return tripService.getPendingTrips();
     }
 
-    @GetMapping("/approvedTrips")
-    public List<TripEntity> getApprovedTrips() {
-        return tripService.getApprovedTrips();
-    }
-
     @GetMapping("/sendApproval{id}")
     public TripEntity sendApproval(@PathVariable("id") Long id) {
         return tripService.sendApproval(id);
@@ -63,11 +54,6 @@ public class TripController {
     @GetMapping("/declineTrip{id}")
     public TripEntity declineTrip(@PathVariable("id") Long id) {
         return tripService.declineTrip(id);
-    }
-
-    @GetMapping("/status{id}")
-    public String getStatus(@PathVariable("id") Long id) {
-        return tripService.getStatus(id);
     }
 
 }
