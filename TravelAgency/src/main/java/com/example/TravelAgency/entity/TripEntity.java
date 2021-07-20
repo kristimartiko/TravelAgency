@@ -1,6 +1,5 @@
 package com.example.TravelAgency.entity;
 
-import com.example.TravelAgency.enumeration.TripStatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 

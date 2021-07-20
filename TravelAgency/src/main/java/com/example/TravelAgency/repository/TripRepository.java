@@ -1,7 +1,6 @@
 package com.example.TravelAgency.repository;
 
 import com.example.TravelAgency.entity.UserEntity;
-import com.example.TravelAgency.enumeration.TripStatusEnum;
 import com.example.TravelAgency.entity.TripEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

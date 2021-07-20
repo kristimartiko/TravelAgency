@@ -56,7 +56,7 @@ public class TripService {
     public void deleteTrip(Long tripId) {
         Optional<TripEntity> trip = tripRepository.findById(tripId);
         if(trip.isPresent()) {
-            flightRepository.deleteAllByTripEntity(trip.get());
+            flightRepository.deleteAllByTripEntity(trip.get().getTripId());
             tripRepository.deleteItem(tripId);
         }
     }
