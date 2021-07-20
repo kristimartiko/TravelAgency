@@ -9,6 +9,7 @@ import com.example.TravelAgency.exception.CustomeException;
 import com.example.TravelAgency.repository.RoleRepository;
 import com.example.TravelAgency.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -21,7 +22,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -32,7 +34,7 @@ public class UserService {
         userEntity.setFirstName(userDto.getFirstName());
         userEntity.setLastName(userDto.getLastName());
         userEntity.setEmail(userDto.getEmail());
-        userEntity.setPassword(userDto.getPassword());
+        userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Optional<RoleEntity> roleEntity = roleRepository.findById(1L);
         if(roleEntity.isPresent()) {
             userEntity.setRoleEntities(new HashSet<>(Arrays.asList(roleEntity.get())));
