@@ -39,6 +39,10 @@ public class SecurtiyConfiguerer extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html",
                         "/swagger-resources/**",
                         "/webjars/**").permitAll()
+                .antMatchers("/users",
+                        "/addUser",
+                        "/pendingTrips",
+                        "/approveTrip{id}").hasAuthority("Admin")
                 .anyRequest().authenticated().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
