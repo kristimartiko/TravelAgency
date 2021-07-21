@@ -1,27 +1,29 @@
 package com.example.TravelAgency.service;
 
+import com.example.TravelAgency.controller.TripController;
 import com.example.TravelAgency.dto.TripDto;
 import com.example.TravelAgency.entity.TripEntity;
 import com.example.TravelAgency.entity.UserEntity;
 import com.example.TravelAgency.repository.FlightRepository;
 import com.example.TravelAgency.repository.TripRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.log4j.Logger;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class TripService {
 
-    private final TripRepository tripRepository;
+    private static final Logger logger = Logger.getLogger(TripController.class);
 
-    private final MyUserDetailService myUserDetailService;
+    @Autowired
+    TripRepository tripRepository;
+
+    @Autowired
+    MyUserDetailService myUserDetailService;
 
     @Autowired
     private FlightRepository flightRepository;
@@ -43,6 +45,7 @@ public class TripService {
 
     public void updateTrip(TripDto tripDto, Long tripId) {
         TripEntity tripEntity = tripRepository.findTripEntityByTripId(tripId);
+        logger.debug("TripService: Found trip with id: " + tripEntity.getTripId());
         tripEntity.setTripReason(tripDto.getTripReason());
         tripEntity.setTripDescription(tripDto.getTripDescription());
         tripEntity.setFromPlace(tripDto.getFromPlace());
