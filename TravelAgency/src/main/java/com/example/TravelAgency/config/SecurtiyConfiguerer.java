@@ -42,7 +42,8 @@ public class SecurtiyConfiguerer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users",
                         "/addUser",
                         "/pendingTrips",
-                        "/approveTrip{id}").hasAuthority("Admin")
+                        "/approveTrip{id}",
+                        "/declineTrip{id}").hasAuthority("Admin")
                 .anyRequest().authenticated().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
